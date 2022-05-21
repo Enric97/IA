@@ -131,7 +131,8 @@ def Greedy():
         finalPath.append(actual)
 
 
-# Variables globals
+# def NodeCreation(list):
+
 Cuina = Node("Cuina")
 
 nA1 = Node("A1")
@@ -163,21 +164,26 @@ nE2 = Node("E2")
 nE3 = Node("E3")
 nE4 = Node("E4")
 
+# Variables globals
 
-actual = moia
-desti = mataro
-cost_a = 0
-possiblePath = {}
-finalPath = []
-finalPath.append(actual)
+nodes = []
+# actual = moia
+# desti = mataro
+# cost_a = 0
+# possiblePath = {}
+# finalPath = []
+# finalPath.append(actual)
 
-print("Estudiem el recorregut entre ", actual.name, " i ", desti.name, "\n")
 
-createTree()
 
-Greedy()
 
-print("---------------------------------------\n")
-print("El recorregut final (amb algoritme Greedy) passa per: ", finalPath, "\n")
-print("El cost del recorregut total es: ", cost_a)
-print("---------------------------------------\n")
+# print("Estudiem el recorregut entre ", actual.name, " i ", desti.name, "\n")
+
+# createTree()
+
+# Greedy()
+
+# print("---------------------------------------\n")
+# print("El recorregut final (amb algoritme Greedy) passa per: ", finalPath, "\n")
+# print("El cost del recorregut total es: ", cost_a)
+# print("---------------------------------------\n")
