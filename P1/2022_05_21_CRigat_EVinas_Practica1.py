@@ -2,6 +2,7 @@
 
 
 # Clase del Node
+
 class Node:
     def __init__(self, name):
         self.childs = {}
@@ -14,7 +15,7 @@ class Node:
     def __repr__(self):
         return str(self.name)
 
-# Relacionem els nodes i assignem valors
+
 def createTree():
 
     Cuina.childs.update({nA1: 1, nA3: 1.5})
@@ -49,37 +50,19 @@ def createTree():
     nE3.childs.update({nA3: 2.5, nE1: 1.75, nE4: 0.5})
     nE4.childs.update({nA3: 2, nE2: 1.75, nE3: 0.5})
 
-
-def checkValidity(node):
-
-    options = {}
-
-    if(node==desti):
-        return True
-
-    for child, cost in node.childs:
-
-        if(not node.isVisited):
-            node.isVisited=True
-            cost_a += cost
-            checkValidity(child)
-        
-
-
 def selectLessCost(options):
 
     cost = 100
     nextStep = None
 
     for key, value in options.items():
-        if(value < cost):
+        #heuristic = calculHeuristica
+        # if(heuristic< actual.Heuristic and not key.isVisited)
+        if(value < cost and not key.isVisited):
             cost = value
             nextStep = key
 
     return {nextStep: cost}
-
-# Funcio per sumar el cost del viatge
-
 
 def AddCost(actualSet):
     global actual
@@ -92,27 +75,23 @@ def AddCost(actualSet):
 
 def Greedy():
     global actual
-    global possiblePath
+    global pathOptions
     global finalPath
 
     while(actual != desti):
-        possiblePath.clear()
+        
+        if(not actual.isVisited):
+            pathOptions.clear()
 
-        for key, cost in actual.childs.items():
+            actual.isVisited=True
 
-            if(checkValidity(key)):
-                possiblePath[key] = cost
-                print("Branca analitzada\n")
+            pathOptions = selectLessCost(actual.childs)
 
-        print("\nEls possibles camins son per ", possiblePath, "\n\n")
+            AddCost(pathOptions)
 
-        actualSet = selectLessCost(possiblePath)
-
-        AddCost(actualSet)
-
-        print("Següent parada, ", actual.name)
-
-        finalPath.append(actual)
+            print("Següent parada, ", actual.name)
+            
+            finalPath.append(actual)
 
 
 # def NodeCreation(list):
@@ -159,9 +138,9 @@ nE4 = Node("E4")
 
 
 actual = Cuina
-desti = nA4
+desti = nC1
 cost_a = 0
-possiblePath = {}
+pathOptions = {}
 finalPath = []
 finalPath.append(actual)
 
@@ -173,7 +152,7 @@ createTree()
 
 Greedy()
 
-# print("---------------------------------------\n")
-# print("El recorregut final (amb algoritme Greedy) passa per: ", finalPath, "\n")
-# print("El cost del recorregut total es: ", cost_a)
-# print("---------------------------------------\n")
+print("---------------------------------------\n")
+print("El recorregut final (amb algoritme Greedy) passa per: ", finalPath, "\n")
+print("El cost del recorregut total es: ", cost_a)
+print("---------------------------------------\n")
