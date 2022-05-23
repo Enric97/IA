@@ -189,6 +189,8 @@ def GetDestinyTopPath(destiny):
 
     # Per no tocar la llista directament, sino una copia
     refList = finalPath.copy()
+    print("FILLS DETECTATS AL NODE ACTUAL ", len(refList[0].childs))
+    print("FILLS DETECTATS AL NODE ACTUAL ", len(finalPath[0].childs))
     recursivity(refList)
 
     # Seleccionem la que te menor cost
