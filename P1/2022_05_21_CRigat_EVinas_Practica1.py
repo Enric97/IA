@@ -1,4 +1,5 @@
 import copy
+import operator
 
 
 # Clase del Node
@@ -59,7 +60,7 @@ def selectLessCost(options):
     for key, value in options.items():
         #heuristic = calculHeuristica
         # if(heuristic< actual.Heuristic and not key.isVisited)
-        if(value < cost and not key.isVisited):
+        if(value < cost):
             cost = value
             nextStep = key
 
@@ -77,11 +78,19 @@ def AddCost(actualSet):
 
 def recursivity(node):
     actualNode = node[-1]
+    global cost_a
+    global solution
 
     # Cas de que estem al desti
     if(actualNode == desti):
         finalPath.extend(node)
+
+        q = tuple(node)
+        solution[q] = cost_a
+
+        print(cost_a, " pasant per ", node)
         # node.pop(-1)
+        # print(node)
         return
 
     # Cas de si l ultim es pocho
@@ -94,8 +103,10 @@ def recursivity(node):
 
     for child, cost in actualNode.childs.items():
         node.append(child)
+        cost_a +=cost
         recursivity(node)
         node.pop(-1)
+        cost_a -=cost
         Visit(node)
 
 
@@ -178,27 +189,27 @@ nE1, nE2, nE3, nE4))
 
 
 actual = Cuina
-desti = nC1
+desti = nE2
 cost_a = 0
-pathOptions = {}
-finalPath = {}
-finalPath[actual] = 0
+solution = {}
+finalPath = []
+finalPath.append(actual)
 
 createTree()
 
-# print("Estudiem el recorregut entre ", actual.name, " i ", desti.name, "\n")
+print("Estudiem el recorregut entre ", actual.name, " i ", desti.name, "\n")
 
-# createTree()
 
 # Greedy()
+# Per no tocar la llista directament, sino una copia
 refList = finalPath.copy()
 recursivity(refList)
 
-# finalPath.pop(0)
+# Seleccionem la que te menor cost
+solution = selectLessCost(solution)
 
+print("---------------------------------------\n")
+print("El recorregut final (amb algoritme Greedy) passa per: ", list(solution.keys()), "\n")
 
-
-# print("---------------------------------------\n")
-print("El recorregut final (amb algoritme Greedy) passa per: ", finalPath, "\n")
-# print("El cost del recorregut total es: ", cost_a)
-# print("---------------------------------------\n")
+print("El cost del recorregut total es: ", sum(solution.values()))
+print("---------------------------------------\n")
