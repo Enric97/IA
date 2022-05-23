@@ -60,7 +60,7 @@ def createTree():
 
 def selectLessCost(options):
 
-    cost = 100
+    cost = math.inf
     nextStep = None
 
     for key, value in options.items():
@@ -82,7 +82,7 @@ def AddCost(actualSet):
         cost_a += value
 
 
-def recursivity(node):
+def recursivity(node): # NOTE: TO ACTIVATE/DEACTIVATE EVERY PATH PRINTING
     actualNode = node[-1]
     global cost_a
     global solution
@@ -94,7 +94,7 @@ def recursivity(node):
         q = tuple(node)
         solution[q] = cost_a
 
-        print(cost_a, " pasant per ", node)
+        #print(cost_a, " pasant per ", node) # NOTE: TO ACTIVATE/DEACTIVATE EVERY PATH PRINTING
         # node.pop(-1)
         # print(node)
         return
@@ -173,6 +173,10 @@ def GetDestinies(maximumOrders):
 
     return destinies
 
+def ResetSolution():
+    global solution
+    solution = {}
+
 def GetDestinyTopPath(destiny):
     global actual
     global desti
@@ -227,6 +231,7 @@ def GetCurrentDestiny(destinies):
     for destiny in destinies:
         ResetFinalPath(currentActual)
         destiniesTopPaths.append(GetDestinyTopPath(destiny))
+        #ResetSolution()
         
     return GetBestPath(destiniesTopPaths)
 
