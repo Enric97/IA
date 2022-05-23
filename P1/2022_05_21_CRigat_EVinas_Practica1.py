@@ -1,7 +1,7 @@
 from asyncio.windows_events import NULL
 import copy
 import operator
-
+import math
 
 # Clase del Node
 
@@ -17,6 +17,11 @@ class Node:
     def __repr__(self):
         return str(self.name)
 
+class Path:
+    def __init__(self, destinyNode, path, cost):
+        self.destinyNode = destinyNode
+        self.path = path
+        self.cost = cost
 
 def createTree():
 
@@ -145,11 +150,11 @@ def Greedy():
             finalPath.append(actual)
 
 def GetNodeInput(elementNumber):
-    nodeName = input("%s%s%s" % ("Enter order ", elementNumber, " (Following format A1, A2, B1...)"))
+    nodeName = input("%s%s%s" % ("Enter order ", elementNumber, " (Following format A1, A2, B1...) \n\t"))
     node = StringToNode(nodeName)
 
     if node == NULL:
-        print("%s%s%s" % ("Empty ", elementNumber, " order / Node not found / Wrong format)"))
+        print("%s%s%s" % ("\tEmpty ", elementNumber, " order / Node not found / Wrong format)"))
 
     return node
 
@@ -162,14 +167,102 @@ def StringToNode(nodeName):
 def GetDestinies(maximumOrders):
     destinies = []
     for i in range(maximumOrders):
-        destinies.append(GetNodeInput(i+1))
+        node = GetNodeInput(i+1)
+        if node != NULL:
+            destinies.append(node)
+
     return destinies
 
-def RobotPath(maximumOrders):
-    global destinies
-    destinies = GetDestinies(maximumOrders)
-    
+def GetDestinyTopPath(destiny):
+    global actual
+    global desti
+    global solution
+    global finalPath
 
+    desti = destiny
+    
+    print("\n\n---------------------------------------")
+    print("Estudiem el recorregut entre ", actual.name, " i ", desti.name, "\n")
+
+    # Per no tocar la llista directament, sino una copia
+    refList = finalPath.copy()
+    recursivity(refList)
+
+    # Seleccionem la que te menor cost
+    solution = selectLessCost(solution)
+
+    
+    print("\nEl recorregut final (amb algoritme Greedy) passa per: ", list(solution.keys()))
+
+    print("El cost del recorregut total és: ", sum(solution.values()))
+    print("---------------------------------------\n")
+
+    path = list(solution.keys())
+    cost = sum(solution.values())
+    return Path(destiny, path, cost)
+
+def GetBestPath(destiniesTopPaths):
+    bestCost = math.inf
+
+    for path in destiniesTopPaths:
+        if path.cost < bestCost:
+            bestCost = path.cost
+
+    for path in destiniesTopPaths:
+        if path.cost == bestCost:
+            return path
+
+    return NULL
+
+def ResetFinalPath(currentActual):
+    global finalPath
+    finalPath = []
+    finalPath.append(currentActual)
+
+def GetCurrentDestiny(destinies):
+    destiniesTopPaths = []
+    global finalPath
+    global actual
+    currentActual = actual
+    for destiny in destinies:
+        ResetFinalPath(currentActual)
+        destiniesTopPaths.append(GetDestinyTopPath(destiny))
+        
+    return GetBestPath(destiniesTopPaths)
+
+def GetRobotPath(maximumOrders):
+    global actual
+
+    destinies = []
+    destinies = GetDestinies(maximumOrders)
+
+    finalRobotPath = []
+
+    while destinies:
+        destinyPath = GetCurrentDestiny(destinies)
+        finalRobotPath.append(destinyPath)
+
+        destinies.remove(destinyPath.destinyNode)
+        actual = destinyPath.destinyNode
+
+        print("\n\n             SELECTED DESTINY: ", destinyPath.destinyNode)
+        print("                         PATH: ", destinyPath.path)
+        print("                         COST: ", destinyPath.cost, "\n\n")
+    
+    return finalRobotPath
+
+def PrintFinalPathsInfo(finalRobotPaths):
+    finalRobotPath = []
+    finalRobotCost = 0
+    
+    for path in finalRobotPaths:
+        finalRobotPath.append(path.path)
+        finalRobotCost += path.cost
+    print("\n\n\n||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n")
+    print("            El recorregut final (amb algoritme A* amb càlcul d'heurística de Backtracking) passa per: \n                         ", finalRobotPath, "\n")
+
+    print("            FINAL COST: ", finalRobotCost)
+    print("\n||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n")
 
 # def NodeCreation(list):
 
@@ -215,10 +308,7 @@ nE1, nE2, nE3, nE4))
 # Variables globals
 
 actual = Cuina
-desti = nE2
-
-destinies = []
-
+desti = NULL
 cost_a = 0
 solution = {}
 finalPath = []
@@ -226,22 +316,5 @@ finalPath.append(actual)
 
 createTree()
 
-print("Estudiem el recorregut entre ", actual.name, " i ", desti.name, "\n")
-
-
-# Greedy()
-# Per no tocar la llista directament, sino una copia
-refList = finalPath.copy()
-recursivity(refList)
-
-# Seleccionem la que te menor cost
-solution = selectLessCost(solution)
-
-print("---------------------------------------\n")
-print("El recorregut final (amb algoritme Greedy) passa per: ", list(solution.keys()), "\n")
-
-print("El cost del recorregut total es: ", sum(solution.values()))
-print("---------------------------------------\n")
-
-
-RobotPath(4)
+finalRobotPath = GetRobotPath(4)
+PrintFinalPathsInfo(finalRobotPath)
