@@ -208,7 +208,6 @@ def GetBestPath(destiniesTopPaths):
     bestCost = math.inf
 
     for path in destiniesTopPaths:
-        print ("PATATQ", path.cost)
         if path.cost < bestCost:
             bestCost = path.cost
 
@@ -231,9 +230,24 @@ def GetCurrentDestiny(destinies):
     for destiny in destinies:
         ResetFinalPath(currentActual)
         destiniesTopPaths.append(GetDestinyTopPath(destiny))
-        #ResetSolution()
+        ResetSolution()
         
     return GetBestPath(destiniesTopPaths)
+
+def PrintDestinyInfo(destinyPath):
+    print("\n\n             SELECTED DESTINY: ", destinyPath.destinyNode)
+    print("                         PATH: ", destinyPath.path)
+    print("                         COST: ", destinyPath.cost, "\n\n")
+
+def PathBackToCuina():
+    global actual
+
+    ResetFinalPath(actual)
+    destinyPath = GetDestinyTopPath(Cuina)
+    actual = Cuina
+    PrintDestinyInfo(destinyPath)
+
+    return destinyPath
 
 def GetRobotPath(maximumOrders):
     global actual
@@ -249,10 +263,9 @@ def GetRobotPath(maximumOrders):
 
         destinies.remove(destinyPath.destinyNode)
         actual = destinyPath.destinyNode
+        PrintDestinyInfo(destinyPath)
 
-        print("\n\n             SELECTED DESTINY: ", destinyPath.destinyNode)
-        print("                         PATH: ", destinyPath.path)
-        print("                         COST: ", destinyPath.cost, "\n\n")
+    finalRobotPath.append(PathBackToCuina())
     
     return finalRobotPath
 
