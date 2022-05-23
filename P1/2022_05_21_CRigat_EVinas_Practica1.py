@@ -184,7 +184,6 @@ def GetDestinyTopPath(destiny):
     global finalPath
 
     desti = destiny
-    
     print("\n\n---------------------------------------")
     print("Estudiem el recorregut entre ", actual.name, " i ", desti.name, "\n")
 
@@ -209,6 +208,7 @@ def GetBestPath(destiniesTopPaths):
     bestCost = math.inf
 
     for path in destiniesTopPaths:
+        print ("PATATQ", path.cost)
         if path.cost < bestCost:
             bestCost = path.cost
 
