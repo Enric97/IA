@@ -1,4 +1,4 @@
-
+import copy
 
 
 # Clase del Node
@@ -50,6 +50,7 @@ def createTree():
     nE3.childs.update({nA3: 2.5, nE1: 1.75, nE4: 0.5})
     nE4.childs.update({nA3: 2, nE2: 1.75, nE3: 0.5})
 
+
 def selectLessCost(options):
 
     cost = 100
@@ -64,6 +65,7 @@ def selectLessCost(options):
 
     return {nextStep: cost}
 
+
 def AddCost(actualSet):
     global actual
     global cost_a
@@ -73,29 +75,66 @@ def AddCost(actualSet):
         cost_a += value
 
 
+def recursivity(node):
+    actualNode = node[-1]
+
+    # Cas de que estem al desti
+    if(actualNode == desti):
+        finalPath.extend(node)
+        # node.pop(-1)
+        return
+
+    # Cas de si l ultim es pocho
+    if(actualNode.isVisited):
+        # print(actualNode, " is already visited")
+        # node.pop(-1)
+        return
+
+    actualNode.isVisited = True
+
+    for child, cost in actualNode.childs.items():
+        node.append(child)
+        recursivity(node)
+        node.pop(-1)
+        Visit(node)
+
+
+def Visit(list):
+    copyList = []
+    copyList = copy.copy(nodeList)
+    
+    for node in list:
+        node.isVisited=True
+        copyList.remove(node)
+    Unvisit(copyList)
+
+def Unvisit(list):
+    for node in list:
+        node.isVisited=False
+
 def Greedy():
     global actual
     global pathOptions
     global finalPath
 
     while(actual != desti):
-        
+
         if(not actual.isVisited):
             pathOptions.clear()
 
-            actual.isVisited=True
+            actual.isVisited = True
 
             pathOptions = selectLessCost(actual.childs)
 
             AddCost(pathOptions)
 
             print("Següent parada, ", actual.name)
-            
+
             finalPath.append(actual)
 
 
 # def NodeCreation(list):
-  
+
 Cuina = Node("Cuina")
 
 nA1 = Node("A1")
@@ -127,11 +166,12 @@ nE2 = Node("E2")
 nE3 = Node("E3")
 nE4 = Node("E4")
 
-# list.extend((Cuina, nA1, nA2, nA3, nA4,
-# nB1, nB2, nB3, nB4,
-# nC1, nC2, nC3, nC4, nC5, nC6, nC7, nC8,
-# nD1, nD2, nD3, nD4,
-# nE1, nE2, nE3, nE4))
+nodeList = []
+nodeList.extend((Cuina, nA1, nA2, nA3, nA4,
+nB1, nB2, nB3, nB4,
+nC1, nC2, nC3, nC4, nC5, nC6, nC7, nC8,
+nD1, nD2, nD3, nD4,
+nE1, nE2, nE3, nE4))
 
 
 # Variables globals
@@ -141,8 +181,8 @@ actual = Cuina
 desti = nC1
 cost_a = 0
 pathOptions = {}
-finalPath = []
-finalPath.append(actual)
+finalPath = {}
+finalPath[actual] = 0
 
 createTree()
 
@@ -150,9 +190,15 @@ createTree()
 
 # createTree()
 
-Greedy()
+# Greedy()
+refList = finalPath.copy()
+recursivity(refList)
 
-print("---------------------------------------\n")
+# finalPath.pop(0)
+
+
+
+# print("---------------------------------------\n")
 print("El recorregut final (amb algoritme Greedy) passa per: ", finalPath, "\n")
-print("El cost del recorregut total es: ", cost_a)
-print("---------------------------------------\n")
+# print("El cost del recorregut total es: ", cost_a)
+# print("---------------------------------------\n")
