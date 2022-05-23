@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 import copy
 import operator
 
@@ -143,6 +144,32 @@ def Greedy():
 
             finalPath.append(actual)
 
+def GetNodeInput(elementNumber):
+    nodeName = input("%s%s%s" % ("Enter order ", elementNumber, " (Following format A1, A2, B1...)"))
+    node = StringToNode(nodeName)
+
+    if node == NULL:
+        print("%s%s%s" % ("Empty ", elementNumber, " order / Node not found / Wrong format)"))
+
+    return node
+
+def StringToNode(nodeName):
+    for node in nodeList:
+        if node.__str__() == nodeName:
+            return node
+    return NULL
+
+def GetDestinies(maximumOrders):
+    destinies = []
+    for i in range(maximumOrders):
+        destinies.append(GetNodeInput(i+1))
+    return destinies
+
+def RobotPath(maximumOrders):
+    global destinies
+    destinies = GetDestinies(maximumOrders)
+    
+
 
 # def NodeCreation(list):
 
@@ -187,9 +214,11 @@ nE1, nE2, nE3, nE4))
 
 # Variables globals
 
-
 actual = Cuina
 desti = nE2
+
+destinies = []
+
 cost_a = 0
 solution = {}
 finalPath = []
@@ -213,3 +242,6 @@ print("El recorregut final (amb algoritme Greedy) passa per: ", list(solution.ke
 
 print("El cost del recorregut total es: ", sum(solution.values()))
 print("---------------------------------------\n")
+
+
+RobotPath(4)
