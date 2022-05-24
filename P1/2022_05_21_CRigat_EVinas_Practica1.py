@@ -19,9 +19,9 @@ class Node:
 
 class Path:
     def __init__(self, destinyNode, path, cost):
-        self.destinyNode = destinyNode
-        self.path = path
-        self.cost = cost
+        self.destinyNode = destinyNode # C1
+        self.path = path # [A1, A2, A3, C1]
+        self.cost = cost # 15
 
 def createTree():
 
@@ -189,8 +189,6 @@ def GetDestinyTopPath(destiny):
 
     # Per no tocar la llista directament, sino una copia
     refList = finalPath.copy()
-    print("FILLS DETECTATS AL NODE ACTUAL ", len(refList[0].childs))
-    print("FILLS DETECTATS AL NODE ACTUAL ", len(finalPath[0].childs))
     recursivity(refList)
 
     # Seleccionem la que te menor cost
