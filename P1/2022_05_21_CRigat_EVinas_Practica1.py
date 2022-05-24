@@ -22,6 +22,12 @@ class Path:
         self.destinyNode = destinyNode # C1
         self.path = path # [A1, A2, A3, C1]
         self.cost = cost # 15
+    
+    def __str__(self):
+        return str(self.path)
+
+    def __repr__(self):
+        return str(self.path)
 
 def createTree():
 
@@ -57,32 +63,21 @@ def createTree():
     nE3.childs.update({nA3: 2.5, nE1: 1.75, nE4: 0.5})
     nE4.childs.update({nA3: 2, nE2: 1.75, nE3: 0.5})
 
-
+#Metode en que done diversos camins i ens retorna el que te un cost menor en un diccionari
 def selectLessCost(options):
 
     cost = math.inf
     nextStep = None
 
     for key, value in options.items():
-        #heuristic = calculHeuristica
-        # if(heuristic< actual.Heuristic and not key.isVisited)
         if(value < cost):
             cost = value
             nextStep = key
 
     return {nextStep: cost}
 
-
-def AddCost(actualSet):
-    global actual
-    global cost_a
-
-    for key, value in actualSet.items():
-        actual = key
-        cost_a += value
-
-
-def recursivity(node): # NOTE: TO ACTIVATE/DEACTIVATE EVERY PATH PRINTING
+# Metode que realitza la recursivitat per trobar tots els camins possibles entre 2 nodes i els seus costs
+def recursivity(node): 
     actualNode = node[-1]
     global cost_a
     global solution
@@ -93,20 +88,18 @@ def recursivity(node): # NOTE: TO ACTIVATE/DEACTIVATE EVERY PATH PRINTING
 
         q = tuple(node)
         solution[q] = cost_a
-
         #print(cost_a, " pasant per ", node) # NOTE: TO ACTIVATE/DEACTIVATE EVERY PATH PRINTING
-        # node.pop(-1)
-        # print(node)
         return
 
     # Cas de si l ultim es pocho
     if(actualNode.isVisited):
         # print(actualNode, " is already visited")
-        # node.pop(-1)
         return
+
 
     actualNode.isVisited = True
 
+    #Bucle duro
     for child, cost in actualNode.childs.items():
         node.append(child)
         cost_a +=cost
@@ -115,7 +108,8 @@ def recursivity(node): # NOTE: TO ACTIVATE/DEACTIVATE EVERY PATH PRINTING
         cost_a -=cost
         Visit(node)
 
-
+#Metode que marca com a visitats els nodes que li enviem per llista
+#Relacionat amb el metode anterior
 def Visit(list):
     copyList = []
     copyList = copy.copy(nodeList)
@@ -125,30 +119,17 @@ def Visit(list):
         copyList.remove(node)
     Unvisit(copyList)
 
+#Metode que marca com a no visitats els nodes que li arriben per una llista
+#També relacionat amb el metode recursiu
 def Unvisit(list):
     for node in list:
         node.isVisited=False
 
-def Greedy():
-    global actual
-    global pathOptions
-    global finalPath
+###
+###Metodes per adaptar a 4 destins
+###
 
-    while(actual != desti):
-
-        if(not actual.isVisited):
-            pathOptions.clear()
-
-            actual.isVisited = True
-
-            pathOptions = selectLessCost(actual.childs)
-
-            AddCost(pathOptions)
-
-            print("Següent parada, ", actual.name)
-
-            finalPath.append(actual)
-
+#Metode que controla el input que posa l'usuari
 def GetNodeInput(elementNumber):
     nodeName = input("%s%s%s" % ("Enter order ", elementNumber, " (Following format A1, A2, B1...) \n\t"))
     node = StringToNode(nodeName)
@@ -158,12 +139,14 @@ def GetNodeInput(elementNumber):
 
     return node
 
+#Metode que converteix l'string del usuari en el node
 def StringToNode(nodeName):
     for node in nodeList:
         if node.__str__() == nodeName:
             return node
     return NULL
 
+#Passant el nombre de destins que volem, usa els 2 metodes previs per agafar tants destins com volguem
 def GetDestinies(maximumOrders):
     destinies = []
     for i in range(maximumOrders):
@@ -173,10 +156,16 @@ def GetDestinies(maximumOrders):
 
     return destinies
 
+#Metode per resetejar variables
+#MOLT IMPORTANT
 def ResetSolution():
     global solution
+    global actual
     solution = {}
+    actual.isVisited=False
 
+#Metode encarregat de cridar al metode recursiu i agafar el de menor cost amb diversos prints
+#Seria semblant a un main
 def GetDestinyTopPath(destiny):
     global actual
     global desti
@@ -204,6 +193,7 @@ def GetDestinyTopPath(destiny):
     cost = sum(solution.values())
     return Path(destiny, path, cost)
 
+#El mateix que el select less cost
 def GetBestPath(destiniesTopPaths):
     bestCost = math.inf
 
@@ -217,11 +207,14 @@ def GetBestPath(destiniesTopPaths):
 
     return NULL
 
+#Not sure si es necessari, crec que la variable de finalPath es redundant (el path esta en solution)
 def ResetFinalPath(currentActual):
     global finalPath
     finalPath = []
     finalPath.append(currentActual)
 
+#Un altre metode principal, tipus main, que itera sobre tots els destins possibles a partir del node actual
+#Crida als que calculen 
 def GetCurrentDestiny(destinies):
     destiniesTopPaths = []
     global finalPath
@@ -229,16 +222,19 @@ def GetCurrentDestiny(destinies):
     currentActual = actual
     for destiny in destinies:
         ResetFinalPath(currentActual)
+        # ResetSolution()
         destiniesTopPaths.append(GetDestinyTopPath(destiny))
         ResetSolution()
         
     return GetBestPath(destiniesTopPaths)
 
+#Print
 def PrintDestinyInfo(destinyPath):
     print("\n\n             SELECTED DESTINY: ", destinyPath.destinyNode)
     print("                         PATH: ", destinyPath.path)
     print("                         COST: ", destinyPath.cost, "\n\n")
 
+#Fer la tornada a la cuina
 def PathBackToCuina():
     global actual
 
@@ -249,6 +245,7 @@ def PathBackToCuina():
 
     return destinyPath
 
+#un altre main¿?¿?
 def GetRobotPath(maximumOrders):
     global actual
 
@@ -269,6 +266,7 @@ def GetRobotPath(maximumOrders):
     
     return finalRobotPath
 
+#Print de la solucio final
 def PrintFinalPathsInfo(finalRobotPaths):
     finalRobotPath = []
     finalRobotCost = 0
@@ -282,8 +280,9 @@ def PrintFinalPathsInfo(finalRobotPaths):
     print("            FINAL COST: ", finalRobotCost)
     print("\n||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n")
 
-# def NodeCreation(list):
+#################################### Variables globals ###############################
 
+## Nodes ##
 Cuina = Node("Cuina")
 
 nA1 = Node("A1")
@@ -323,14 +322,15 @@ nD1, nD2, nD3, nD4,
 nE1, nE2, nE3, nE4))
 
 
-# Variables globals
+
+# Mes variables globals
 
 actual = Cuina
 desti = NULL
 cost_a = 0
 solution = {}
 finalPath = []
-finalPath.append(actual)
+# finalPath.append(actual)
 
 createTree()
 
