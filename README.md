@@ -2,12 +2,12 @@
 ### **_Tècniques d'Intel·ligència Artificial | TecnoCampus Mataró | Enginyeria Informàtica_**
 
 
-## Carpeta Greedy -> Algoritme Greedy [a relative link](Greedy)
+## [Carpeta Greedy](Greedy) -> Algoritme Greedy
 
 La carpeta inclou la implementació de l'algoritme Greedy en Python.
 
 
-## Carpeta P1 -> Algoritme A* + Backtracking [a relative link](P1)
+## [Carpeta P1](P1) -> Algoritme A* + Backtracking
 
 La carpeta inclou l'enunciat de la Pràctica 1 de l'assignatura i la seva implementació en Python. Es basa en l'algoritme Greedy de la carpeta Greedy, amb modificacions per a fer ús d'heurístiques a l'estil d'A*, calculades a partir de tècniques recursives del caire de backtrackings.
 
