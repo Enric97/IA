@@ -9,6 +9,7 @@ class Casella:
         self.columna = columna
         self.name = fila+columna
         self.isVisited = False
+        self.pos = -1
 
     def getFila(self):
         return self.fila
@@ -18,12 +19,18 @@ class Casella:
     
     def getVisited(self):
         return self.isVisited
-
+    
+    def getPos(self):
+        return self.pos
+    
     def visit(self):
         self.isVisited = True
 
     def unvisit(self):
         self.isVisited = False
+
+    def setPos(self, pos):
+        self.pos=pos
 
     def __str__(self):
         return str(self.name)
@@ -139,6 +146,7 @@ def validarPosicions(possiblesPosicions):
 
 def recursivity(NomCasella):
     global solution
+    # global pos
     # print(solution)
     casella = board.getCasella(NomCasella)
     # checkingMoves = []
@@ -151,6 +159,8 @@ def recursivity(NomCasella):
         return
     
     casella.visit()
+    # pos=pos+1
+    # casella.setPos(pos)
 
     for move in checkingMoves:
         solution.append(move)
@@ -176,7 +186,10 @@ def Unvisit(list):
     for casella in list:
         casella.unvisit()
 
-    
+
+
+pos = 0
+
 # Solucio
 solution = []
 
@@ -187,8 +200,10 @@ createCasellas(board)
 print(board)
 
 # KnightMouCasella(board.getCasella("A0"))
-solution.append("A1")
-recursivity("A1")
+# board.getCasella("A8").setPos(0)
+
+solution.append("A8")
+recursivity("A8")
 
 print(solution)
 
