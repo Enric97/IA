@@ -125,6 +125,13 @@ def validarPosicions(possiblesPosicions):
     validSolutions = []
     for i in possiblesPosicions:
         validSolutions += re.findall("[A-H][1-8]", i)
+    
+
+    # Opcional, ja es checkea en el recursive
+    # for i in validSolutions:
+    #     if(board.getCasella(i).getVisited()):
+    #          validSolutions.remove(i)
+
     return validSolutions
 
 # ----------
@@ -134,7 +141,7 @@ def recursivity(NomCasella):
     global solution
     # print(solution)
     casella = board.getCasella(NomCasella)
-    checkingMoves = []
+    # checkingMoves = []
     checkingMoves = KnightMouCasella(casella)
 
     if(board.checkAllVisited()):
@@ -159,8 +166,7 @@ def Visit(list):
     # print(copyList)
     for casella in list:
         # print(casella)
-        board.visitCasella(casella)
-        # casella.visit()
+        # board.visitCasella(casella)
         copyList.remove(board.getCasella(casella))
     Unvisit(copyList)
 
@@ -171,10 +177,8 @@ def Unvisit(list):
         casella.unvisit()
 
     
-
+# Solucio
 solution = []
-
-
 
 # Create board
 board = Board()
@@ -182,9 +186,9 @@ createCasellas(board)
 
 print(board)
 
-# KnightMouCasella(board.getCasella("C8"))
-solution.append("E8")
-recursivity("E8")
+# KnightMouCasella(board.getCasella("A0"))
+solution.append("A1")
+recursivity("A1")
 
 print(solution)
 
