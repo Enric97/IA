@@ -1,10 +1,10 @@
 # import chess;
 import re
+import copy
 
 
 class Casella:
     def __init__(self, fila, columna):
-        self.childs = {}
         self.fila = fila
         self.columna = columna
         self.name = fila+columna
@@ -55,6 +55,20 @@ class Board:
                 if (not y.getVisited()): 
                     return False
         return True
+    
+    def getBoard(self):
+        casellas = []
+        for i in self.board:
+            for y in i:
+                casellas.append(y)
+        return casellas
+
+    def visitCasella(self, casella):
+        self.getCasella(casella).visit()
+
+    def unvisitCasella(self, casella):
+        self.getCasella(casella).visit()
+
 
     def __str__(self):  # Per printear be
         return '\n'.join(map(str, self.board))
@@ -80,13 +94,13 @@ def createCasellas(board):
 def KnightMouCasella(origen):
 
     possiblesPosicions = []
-    print("La casella origen es: ", origen)
+    # print("La casella origen es: ", origen)
 
     possiblesPosicions += calculNovesCeles(origen, 1, 2)
     possiblesPosicions += calculNovesCeles(origen, 2, 1)
 
     possiblesPosicions = validarPosicions(possiblesPosicions)
-    print("Les possibles destinacions son: ", possiblesPosicions)
+    # print("Les possibles destinacions son: ", possiblesPosicions)
     return possiblesPosicions
 
 # Subfuncio del anterior. Donat unes coordenades i variança, calcula totes les cel.les possibles en ese marge
@@ -118,9 +132,10 @@ def validarPosicions(possiblesPosicions):
 
 def recursivity(NomCasella):
     global solution
+    # print(solution)
     casella = board.getCasella(NomCasella)
     checkingMoves = []
-    checkingMoves = KnightMouCasella(board.getCasella(casella))
+    checkingMoves = KnightMouCasella(casella)
 
     if(board.checkAllVisited()):
         return solution
@@ -134,7 +149,26 @@ def recursivity(NomCasella):
         solution.append(move)
         recursivity(move)
         solution.pop(-1)
+        Visit(solution)
 
+#Metode que marca com a visitats les caselles que enviem per la llista
+#Relacionat amb el metode anterior
+def Visit(list):
+    copyList = []
+    copyList = copy.copy(board.getBoard())
+    # print(copyList)
+    for casella in list:
+        # print(casella)
+        board.visitCasella(casella)
+        # casella.visit()
+        copyList.remove(board.getCasella(casella))
+    Unvisit(copyList)
+
+#Metode que marca com a no visitats les caselles que arriben per una llista
+#També relacionat amb el metode recursiu
+def Unvisit(list):
+    for casella in list:
+        casella.unvisit()
 
     
 
@@ -149,7 +183,7 @@ createCasellas(board)
 print(board)
 
 # KnightMouCasella(board.getCasella("C8"))
-
+solution.append("E8")
 recursivity("E8")
 
 print(solution)
