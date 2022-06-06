@@ -3,10 +3,9 @@
 
 
 ## Índex  
-### - [Greedy](#Algoritme%20Greedy)  
-### - [Pràctica 1](#Pràctica%201) 
-### - [Pràctica 2](#Pràctica%202) 
-
+- [Algoritme Greedy](#Algoritme%20Greedy)  
+- [Pràctica 1](#Pràctica%201) 
+- [Pràctica 2](#Pràctica%202) 
 
 
 # Algoritme Greedy
