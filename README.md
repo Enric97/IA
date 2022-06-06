@@ -1,13 +1,21 @@
-# Algoritmes de Tècniques d'Intel·ligència Artificial
-### **_Tècniques d'Intel·ligència Artificial | TecnoCampus Mataró | Enginyeria Informàtica_**
+## Algoritmes de Tècniques d'Intel·ligència Artificial
+#### **_Tècniques d'Intel·ligència Artificial | TecnoCampus Mataró | Enginyeria Informàtica_**
 
 
-## [Carpeta Greedy](Greedy) -> Algoritme Greedy
+### Índex  
+##[Greedy](#greedy)  
+##[Pràctica 1](#practica1) 
+##[Pràctica 2](#practica2) 
+
+
+
+<a name="headers"/>
+### [Carpeta Greedy](Greedy) -> Algoritme Greedy
 
 La carpeta inclou la implementació de l'algoritme Greedy en Python.
 
-
-## [Carpeta P1](P1) -> Algoritme A* + Backtracking
+<a name="practica1"/>
+### [Carpeta P1](P1) -> Algoritme A* + Backtracking
 
 La carpeta inclou l'enunciat de la Pràctica 1 de l'assignatura i la seva implementació en Python. Es basa en l'algoritme Greedy de la carpeta Greedy, amb modificacions per a fer ús d'heurístiques a l'estil d'A*, calculades a partir de tècniques recursives del caire de backtrackings.
 
@@ -95,3 +103,44 @@ La qüestió és que hem de crear un algoritme recursiu que sigui capaç d'anali
 
 Proposta: Analitzar visited però dels childs, possiblement juntar-ho amb backtracking.
 
+
+
+
+
+<a name="practica2"/>
+### [Carpeta P2](P2) -> Backtracking pel problema dels cavalls
+
+La carpeta inclou l'enunciat de la Pràctica 2 de l'assignatura i la seva implementació en Python. Conté un programa original (2022_06_14_CRigat_EVinas_Practica2.py) creat a partir de l'algoritme de Backtracking seguit a la Pràctica 1, i un altre programa (practica2_alternativa.py) basat en un codi existent sobre el qual s'han aplicat modificacions.
+
+
+## 2022_06_14_CRigat_EVinas_Practica2.py
+# Estructura del programa i exemple d'execució
+
+L'estructura del programa és la següent:
+
+![image](https://user-images.githubusercontent.com/60795194/172229167-1990a3ab-bd55-4d9f-b531-b276ae230196.png)
+
+El seu nucli és el mètode recursiu:
+
+![image](https://user-images.githubusercontent.com/60795194/172229375-fc33b2a8-26eb-46ef-ad8e-d77b64e1bde9.png)
+
+I el seu 'main' és el següent:
+
+![image](https://user-images.githubusercontent.com/60795194/172229686-d177c82c-a260-4add-af51-a77f1b00e0a5.png)
+
+Per a executar-lo, es demana la casella inicial i es comencen a calcular les possibilitats.
+Degut a la gran quantitat d'opcions disponibles, el programa no ofereix una solució ràpida.
+
+![image](https://user-images.githubusercontent.com/60795194/172230156-41d196e0-02d9-48f1-b687-bf3ec73c00f2.png)
+
+Ara bé, si s'habiliten les següents impressions (o s'explora l'execució pas a pas amb el mode de Debug de l'IDE escollit) es pot seguir la traça dels camins seguits:
+
+![image](https://user-images.githubusercontent.com/60795194/172230674-a1cd238d-99c5-49ea-be05-247fa47103ed.png)
+
+![image](https://user-images.githubusercontent.com/60795194/172230793-142a01a9-760b-4e7a-b273-313ce272799c.png)
+
+
+
+
+## practica2_alternativa.py
+# Estructura del programa i exemple d'execució
