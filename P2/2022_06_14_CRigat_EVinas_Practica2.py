@@ -147,7 +147,7 @@ def validarPosicions(possiblesPosicions):
 def recursivity(NomCasella):
     global solution
     # global pos
-    # print(solution)
+    # print(solution) # NOTA: ACTIVAR PER VEURE EL PROGRÉS DELS CAMINS ESCOLLITS
     casella = board.getCasella(NomCasella)
     # checkingMoves = []
     
