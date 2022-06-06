@@ -1,21 +1,21 @@
-## Algoritmes de Tècniques d'Intel·ligència Artificial
-#### **_Tècniques d'Intel·ligència Artificial | TecnoCampus Mataró | Enginyeria Informàtica_**
+# Algoritmes de Tècniques d'Intel·ligència Artificial
+### **_Tècniques d'Intel·ligència Artificial | TecnoCampus Mataró | Enginyeria Informàtica_**
 
 
-### Índex  
-##[Greedy](#greedy)  
-##[Pràctica 1](#practica1) 
-##[Pràctica 2](#practica2) 
+## Índex  
+### - [Greedy](#Algoritme%20Greedy)  
+### - [Pràctica 1](#Pràctica%201) 
+### - [Pràctica 2](#Pràctica%202) 
 
 
 
-<a name="headers"/>
-### [Carpeta Greedy](Greedy) -> Algoritme Greedy
+# Algoritme Greedy
+## [Carpeta Greedy](Greedy) -> Algoritme Greedy
 
 La carpeta inclou la implementació de l'algoritme Greedy en Python.
 
-<a name="practica1"/>
-### [Carpeta P1](P1) -> Algoritme A* + Backtracking
+# Pràctica 1
+## [Carpeta P1](P1) -> Algoritme A* + Backtracking
 
 La carpeta inclou l'enunciat de la Pràctica 1 de l'assignatura i la seva implementació en Python. Es basa en l'algoritme Greedy de la carpeta Greedy, amb modificacions per a fer ús d'heurístiques a l'estil d'A*, calculades a partir de tècniques recursives del caire de backtrackings.
 
@@ -107,14 +107,14 @@ Proposta: Analitzar visited però dels childs, possiblement juntar-ho amb backtr
 
 
 
-<a name="practica2"/>
-### [Carpeta P2](P2) -> Backtracking pel problema dels cavalls
+# Pràctica 2
+## [Carpeta P2](P2) -> Backtracking pel problema dels cavalls
 
 La carpeta inclou l'enunciat de la Pràctica 2 de l'assignatura i la seva implementació en Python. Conté un programa original (2022_06_14_CRigat_EVinas_Practica2.py) creat a partir de l'algoritme de Backtracking seguit a la Pràctica 1, i un altre programa (practica2_alternativa.py) basat en un codi existent sobre el qual s'han aplicat modificacions.
 
 
-## 2022_06_14_CRigat_EVinas_Practica2.py
-# Estructura del programa i exemple d'execució
+### 2022_06_14_CRigat_EVinas_Practica2.py
+#### Estructura del programa i exemple d'execució
 
 L'estructura del programa és la següent:
 
@@ -142,5 +142,16 @@ Ara bé, si s'habiliten les següents impressions (o s'explora l'execució pas a
 
 
 
-## practica2_alternativa.py
-# Estructura del programa i exemple d'execució
+### practica2_alternativa.py
+#### Estructura del programa i exemple d'execució
+
+L'estructura del programa és la següent:
+
+![image](https://user-images.githubusercontent.com/60795194/172232259-be568afd-b304-44b6-b20c-b5467a71c7b5.png)
+
+Aquí, les caselles es tracten com a números en una array, enlloc de com a objectes d'una classe Casella com es fa en la implementació original prèvia.
+
+Al executar el programa, també triga un cert temps però acaba retornant un camí possible abans que en la implementació original:
+
+![image](https://user-images.githubusercontent.com/60795194/172232782-38d4db0b-9fab-42dc-923a-e363ac9e0bd1.png)
+
