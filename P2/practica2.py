@@ -9,7 +9,7 @@ class Casella:
         self.columna = columna
         self.name = fila+columna
         self.isVisited = False
-        self.pos = -1
+        # self.pos = -1
 
     def getFila(self):
         return self.fila
@@ -20,8 +20,8 @@ class Casella:
     def getVisited(self):
         return self.isVisited
     
-    def getPos(self):
-        return self.pos
+    # def getPos(self):
+    #     return self.pos
     
     def visit(self):
         self.isVisited = True
@@ -29,8 +29,8 @@ class Casella:
     def unvisit(self):
         self.isVisited = False
 
-    def setPos(self, pos):
-        self.pos=pos
+    # def setPos(self, pos):
+    #     self.pos=pos
 
     def __str__(self):
         return str(self.name)
@@ -74,7 +74,7 @@ class Board:
         self.getCasella(casella).visit()
 
     def unvisitCasella(self, casella):
-        self.getCasella(casella).visit()
+        self.getCasella(casella).unvisit()
 
 
     def __str__(self):  # Per printear be
@@ -150,14 +150,16 @@ def recursivity(NomCasella):
     # print(solution)
     casella = board.getCasella(NomCasella)
     # checkingMoves = []
-    checkingMoves = KnightMouCasella(casella)
+    
 
     if(board.checkAllVisited()):
         return solution
-    
+ 
     if(casella.getVisited()):
         return
     
+    checkingMoves = KnightMouCasella(casella)
+
     casella.visit()
     # pos=pos+1
     # casella.setPos(pos)
@@ -199,11 +201,12 @@ createCasellas(board)
 
 print(board)
 
-# KnightMouCasella(board.getCasella("A0"))
+# print(KnightMouCasella(board.getCasella("E4")))
 # board.getCasella("A8").setPos(0)
+inici = input("En quina cel.la vols iniciar el recorregut?")
 
-solution.append("A8")
-recursivity("A8")
+solution.append(inici)
+recursivity(inici)
 
 print(solution)
 
