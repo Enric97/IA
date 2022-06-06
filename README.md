@@ -150,7 +150,12 @@ L'estructura del programa és la següent:
 
 Aquí, les caselles es tracten com a números en una array, enlloc de com a objectes d'una classe Casella com es fa en la implementació original prèvia.
 
-Al executar el programa, també triga un cert temps però acaba retornant un camí possible abans que en la implementació original:
+Al executar el programa, també triga un cert temps però acaba retornant un camí possible abans que en la implementació original. Primer es comprova que l'entrada de l'usuari sigui correcta:
 
-![image](https://user-images.githubusercontent.com/60795194/172232782-38d4db0b-9fab-42dc-923a-e363ac9e0bd1.png)
+![image](https://user-images.githubusercontent.com/60795194/172239555-b5bd9350-c408-43d9-8f5b-c6276e12b0db.png)
+
+
+I després el resultat especifica l'ordre en què es fan els moviments:
+
+![image](https://user-images.githubusercontent.com/60795194/172239306-7b5ea980-db94-4fb0-8476-238cc218369f.png)
 
