@@ -4,7 +4,9 @@
  
 # Chessboard Size
 n = 8
- 
+
+column = 0
+row = 0
  
 def isSafe(x, y, board):
     '''
@@ -36,6 +38,9 @@ def solveKT(n):
         Please note that there may be more than one solutions,
         this function prints one of the feasible solutions.
     '''
+
+    global column
+    global row
  
     # Initialization of Board matrix
     board = [[-1 for i in range(n)]for i in range(n)]
@@ -47,7 +52,7 @@ def solveKT(n):
     move_y = [1, 2, 2, 1, -1, -2, -2, -1]
  
     # Since the Knight is initially at the first block
-    board[0][0] = 0
+    board[column][row] = 0
  
     # Step counter for knight's position
     pos = 1
@@ -80,11 +85,35 @@ def solveKTUtil(n, board, curr_x, curr_y, move_x, move_y, pos):
             # Backtracking
             board[new_x][new_y] = -1
     return False
- 
- 
+
+def getInitialPositionInput():
+    global column
+    global row
+
+    column = input("En quina columna vol iniciar el recorregut? (numèric des de 0 fins a 7)\n\t")
+
+    while (not isDigit(column)) or (not inRange(column)):
+        print ("Entrada incorrecta.\n")
+        column = input("En quina columna vol iniciar el recorregut? (numèric des de 0 fins a 7)\n\t")
+
+    row = input("En quina fila vol iniciar el recorregut? (numèric des de 0 fins a 7)\n\t")
+
+    while (not isDigit(row)) or (not inRange(row)):
+        print ("Entrada incorrecta.\n")
+        row = input("En quina fila vol iniciar el recorregut? (numèric des de 0 fins a 7)\n\t")
+
+    column = int(column)
+    row = int(row)
+
+def isDigit(input_str):
+    return input_str.strip().isdigit()
+
+def inRange(input_str):
+    return int(input_str) >= 0 and int(input_str) <= 7
+
 # Driver Code
 if __name__ == "__main__":
-     
+    getInitialPositionInput()
     # Function Call
     solveKT(n)
  
