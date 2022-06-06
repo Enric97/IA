@@ -3,9 +3,9 @@
 
 
 ## Índex  
-- [Algoritme Greedy](#Algoritme%20Greedy)  
-- [Pràctica 1](#Pràctica%201) 
-- [Pràctica 2](#Pràctica%202) 
+- [Algoritme Greedy](https://github.com/Enric97/IA/blob/main/README.md#carpeta-greedy---algoritme-greedy)  
+- [Pràctica 1](https://github.com/Enric97/IA/blob/main/README.md#pr%C3%A0ctica-1) 
+- [Pràctica 2](https://github.com/Enric97/IA/blob/main/README.md#pr%C3%A0ctica-2) 
 
 
 # Algoritme Greedy
