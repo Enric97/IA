@@ -203,10 +203,15 @@ print(board)
 
 # print(KnightMouCasella(board.getCasella("E4")))
 # board.getCasella("A8").setPos(0)
-inici = input("En quina cel.la vols iniciar el recorregut?")
+
+inici = input("En quina cel.la vol iniciar el recorregut? (des de A1 fins E8)\n\t")
+
+while not re.match("[A-H][1-8]", inici):
+    print ("Entrada incorrecta.\n")
+    inici = input("En quina cel.la vols iniciar el recorregut? (des de A1 fins E8)\n\t")
 
 solution.append(inici)
 recursivity(inici)
-
 print(solution)
+    
 

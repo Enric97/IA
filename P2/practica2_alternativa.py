@@ -1,3 +1,4 @@
+# Versió de solució alternativa, basada en l'algoritme extret de:
 # https://www.geeksforgeeks.org/the-knights-tour-problem-backtracking-1/
 # Python3 program to solve Knight Tour problem using Backtracking
  
