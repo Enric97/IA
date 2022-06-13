@@ -20,17 +20,11 @@ class Casella:
     def getVisited(self):
         return self.isVisited
     
-    # def getPos(self):
-    #     return self.pos
-    
     def visit(self):
         self.isVisited = True
 
     def unvisit(self):
         self.isVisited = False
-
-    # def setPos(self, pos):
-    #     self.pos=pos
 
     def __str__(self):
         return str(self.name)
@@ -141,8 +135,6 @@ def validarPosicions(possiblesPosicions):
 
     return validSolutions
 
-# ----------
-
 
 def recursivity(NomCasella):
     global solution
@@ -161,8 +153,6 @@ def recursivity(NomCasella):
     checkingMoves = KnightMouCasella(casella)
 
     casella.visit()
-    # pos=pos+1
-    # casella.setPos(pos)
 
     for move in checkingMoves:
         solution.append(move)
