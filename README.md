@@ -107,10 +107,11 @@ Proposta: Analitzar visited però dels childs, possiblement juntar-ho amb backtr
 
 
 # Pràctica 2
-## [Carpeta P2](P2) -> Backtracking pel problema dels cavalls
+## [Carpeta P2](P2) -> Backtracking pel problema dels cavalls amb Forward Checking
 
 La carpeta inclou l'enunciat de la Pràctica 2 de l'assignatura i la seva implementació en Python. Conté un programa original (2022_06_14_CRigat_EVinas_Practica2.py) creat a partir de l'algoritme de Backtracking seguit a la Pràctica 1, i un altre programa (practica2_alternativa.py) basat en un codi existent sobre el qual s'han aplicat modificacions.
 
+Es realitza l'algoritme amb Forward Checking, donat que utilitzar una heurística més complicada ralentitzaria encara més l'execució.
 
 ### 2022_06_14_CRigat_EVinas_Practica2.py
 #### Estructura del programa i exemple d'execució
