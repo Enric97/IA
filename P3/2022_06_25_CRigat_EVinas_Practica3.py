@@ -1,207 +1,68 @@
-# import chess;
-import re
-import copy
+from enum import Enum
 
+boards = []
+DEFAULT_BOARD = [[0,0,0],[0,0,0],[0,0,0]]
+EMPTY = 0
+O = 'O'
+S = 'S'
 
-class Casella:
-    def __init__(self, fila, columna):
-        self.fila = fila
-        self.columna = columna
-        self.name = fila+columna
-        self.isVisited = False
-        # self.pos = -1
+class Player:
+    O = 0
+    S = 1
 
-    def getFila(self):
-        return self.fila
-
-    def getColumna(self):
-        return self.columna
-    
-    def getVisited(self):
-        return self.isVisited
-    
-    def visit(self):
-        self.isVisited = True
-
-    def unvisit(self):
-        self.isVisited = False
+class BoardState:
+    def __init__(self, board, pointsO, pointsS):
+        self.children = []
+        self.board = board
+        self.pointsO = pointsO
+        self.pointsS = pointsS
 
     def __str__(self):
-        return str(self.name)
+        return str(self.board+" Points O: "+self.pointsO+" Points S: "+self.pointsS)
 
     def __repr__(self):
-        return str(self.name)
+        return str(self.board+" Points O: "+self.pointsO+" Points S: "+self.pointsS)
 
+def explore_tree(board_state, current_player):
+    board_state.children = possible_children(board_state, current_player)
+    current_player = change_player(current_player)
+    for child in board_state.children:
+        child = explore_tree(child, current_player)
+    return board_state
 
-class Board:
-    # board = []
-    def __init__(self):
-        self.board = []
+def possible_children(board_state, current_player):
+    children = []
+    i = 0
+    j = 0
+    for line in board_state.board:
+        j = 0
+        for column in line:
+            if is_empty(board_state.board[i][j]):
+                new_board = move_current_player(board_state.board, i, j, current_player)
+                children.append(new_board)
+            j += 1
+        i += 1        
 
-    def append(self, fila):
-        self.board.append(fila)
+    return children
+            
 
-    def getCasella(self, casella):
-        for i in self.board:
-            # print(i)
-            for y in i:
-                # print(str(y))
-                if(str(y) == casella):
-                    return y
-        return "No existeix la casella"
+def is_empty(box):
+    return box == EMPTY
 
-    def checkAllVisited(self):
-        for i in self.board:
-            for y in i:
-                if (not y.getVisited()): 
-                    return False
-        return True
-    
-    def getBoard(self):
-        casellas = []
-        for i in self.board:
-            for y in i:
-                casellas.append(y)
-        return casellas
+def move_current_player(board, i, j, current_player):
+    board[i][j] = current_player
+    return board
 
-    def visitCasella(self, casella):
-        self.getCasella(casella).visit()
+def change_player(current_player):
+    if current_player == Player.O:
+        return Player.S  
+    else:
+        return Player.O
 
-    def unvisitCasella(self, casella):
-        self.getCasella(casella).unvisit()
+def print_all(board_state):
+    print(board_state.board)
+    for child in board_state.children:
+        print_all(child)
 
-
-    def __str__(self):  # Per printear be
-        return '\n'.join(map(str, self.board))
-
-    def __repr__(self):
-        return '\n'.join(map(str, self.board))
-
-# Creacio de les caselles i afegim a Board
-def createCasellas(board):
-
-    leters = ["A", "B", "C", "D", "E", "F", "G", "H"]
-    numbers = ["8", "7", "6", "5", "4", "3", "2", "1"]
-
-    fila = []
-
-    for i in numbers:
-        for y in leters:
-            fila.append(Casella(y, i))
-        board.append(fila)
-        fila = []
-
-# Metode principal per determinar posibles ubicacions a moure a partir d'una cela concreta
-def KnightMouCasella(origen):
-
-    possiblesPosicions = []
-    # print("La casella origen es: ", origen)
-
-    possiblesPosicions += calculNovesCeles(origen, 1, 2)
-    possiblesPosicions += calculNovesCeles(origen, 2, 1)
-
-    possiblesPosicions = validarPosicions(possiblesPosicions)
-    # print("Les possibles destinacions son: ", possiblesPosicions)
-    return possiblesPosicions
-
-# Subfuncio del anterior. Donat unes coordenades i variança, calcula totes les cel.les possibles en ese marge
-def calculNovesCeles(origen, fila, columna):
-    novesFiles = []
-    novesColumnes = []
-    possiblesPosicions = []
-
-    novesFiles.append(chr(ord(origen.getFila()) + fila))
-    novesFiles.append(chr(ord(origen.getFila()) - fila))
-    novesColumnes.append(chr(ord(origen.getColumna()) + columna))
-    novesColumnes.append(chr(ord(origen.getColumna()) - columna))
-
-    for i in novesFiles:
-        for y in novesColumnes:
-            possiblesPosicions.append(i+y)
-
-    return possiblesPosicions
-
-# Donat un conjunt de cel.les, validem que realment existeixen en el taulell
-def validarPosicions(possiblesPosicions):
-    validSolutions = []
-    for i in possiblesPosicions:
-        validSolutions += re.findall("[A-H][1-8]", i)
-    
-
-    # Opcional, ja es checkea en el recursive
-    # for i in validSolutions:
-    #     if(board.getCasella(i).getVisited()):
-    #          validSolutions.remove(i)
-
-    return validSolutions
-
-
-def recursivity(NomCasella):
-    global solution
-    # global pos
-    # print(solution) # NOTA: ACTIVAR PER VEURE EL PROGRÉS DELS CAMINS ESCOLLITS
-    casella = board.getCasella(NomCasella)
-    # checkingMoves = []
-    
-
-    if(board.checkAllVisited()):
-        return solution
- 
-    if(casella.getVisited()):
-        return
-    
-    checkingMoves = KnightMouCasella(casella)
-
-    casella.visit()
-
-    for move in checkingMoves:
-        solution.append(move)
-        recursivity(move)
-        solution.pop(-1)
-        Visit(solution)
-
-#Metode que marca com a visitats les caselles que enviem per la llista
-#Relacionat amb el metode anterior
-def Visit(list):
-    copyList = []
-    copyList = copy.copy(board.getBoard())
-    # print(copyList)
-    for casella in list:
-        # print(casella)
-        # board.visitCasella(casella)
-        copyList.remove(board.getCasella(casella))
-    Unvisit(copyList)
-
-#Metode que marca com a no visitats les caselles que arriben per una llista
-#També relacionat amb el metode recursiu
-def Unvisit(list):
-    for casella in list:
-        casella.unvisit()
-
-
-
-pos = 0
-
-# Solucio
-solution = []
-
-# Create board
-board = Board()
-createCasellas(board)
-
-print(board)
-
-# print(KnightMouCasella(board.getCasella("E4")))
-# board.getCasella("A8").setPos(0)
-
-inici = input("En quina cel.la vol iniciar el recorregut? (des de A1 fins E8)\n\t")
-
-while not re.match("[A-H][1-8]", inici):
-    print ("Entrada incorrecta.\n")
-    inici = input("En quina cel.la vols iniciar el recorregut? (des de A1 fins E8)\n\t")
-
-solution.append(inici)
-recursivity(inici)
-print(solution)
-    
-
+root = explore_tree(BoardState(DEFAULT_BOARD, 0, 0), Player.O)
+print_all(root)
