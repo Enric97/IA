@@ -97,8 +97,8 @@ def KnightMouCasella(origen):
     possiblesPosicions = []
     # print("La casella origen es: ", origen)
 
-    possiblesPosicions += calculNovesCeles(origen, 1, 2)
     possiblesPosicions += calculNovesCeles(origen, 2, 1)
+    possiblesPosicions += calculNovesCeles(origen, 1, 2)
 
     possiblesPosicions = validarPosicions(possiblesPosicions)
     # print("Les possibles destinacions son: ", possiblesPosicions)
@@ -129,9 +129,9 @@ def validarPosicions(possiblesPosicions):
     
 
     # Opcional, ja es checkea en el recursive
-    # for i in validSolutions:
-    #     if(board.getCasella(i).getVisited()):
-    #          validSolutions.remove(i)
+    for i in validSolutions:
+        if(board.getCasella(i).getVisited()):
+             validSolutions.remove(i)
 
     return validSolutions
 
@@ -144,7 +144,9 @@ def recursivity(NomCasella):
     # checkingMoves = []
     
 
-    if(board.checkAllVisited()):
+    # if(board.checkAllVisited()):
+    print(len(solution))
+    if(len(solution)==64):
         return solution
  
     if(casella.getVisited()):
