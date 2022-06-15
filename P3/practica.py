@@ -9,6 +9,9 @@ class Jugador:
     def win(self):
         self.wins += 1
 
+    def resetWins(self):
+        self.wins = 0
+
     def __str__(self):
         return str(self.name)
 
