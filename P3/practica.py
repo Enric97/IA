@@ -148,6 +148,7 @@ def miniMax (taulell):
         else:
             StotalWins +=1
         # return taulell.getPuntuacioTotal()  #Printejem las puntuacions
+        return
 
     casellesBuides = taulell.getCasellesBuides()
     placeholder = 0 #Valor placeholder de punts
@@ -172,7 +173,7 @@ def miniMax (taulell):
             taulell2.marcarCasella(crisella[0],crisella[1])    #tornem a marcar sol la casella que ens interessa
             taulell2.actualPlayer.win(placeholder)   #Indiquem els punts que ha guanyat amb aquesta jugada
             taulell2.changePlayer()  #Cambiem de jugador
-            return miniMax(taulell2)
+            miniMax(taulell2)
 
     else:   #Exactament el mateix, sol que la condicio es <= (busquem que doni els menors punts possibles)
         placeholder= int(INFINITE)    #Donat que busquem el minim, el placeholder el fiquem al maxim
@@ -194,7 +195,7 @@ def miniMax (taulell):
             taulell2.marcarCasella(crisella[0],crisella[1])    #tornem a marcar sol la casella que ens interessa
             taulell2.actualPlayer.win(placeholder)   #Indiquem els punts que ha guanyat amb aquesta jugada
             taulell2.changePlayer()  #Cambiem de jugador
-            return miniMax(taulell2)
+            miniMax(taulell2)
 
 
 
@@ -208,15 +209,9 @@ player1 = Jugador("O")
 player2 = Jugador("S")
 totalPlayers = [player1, player2]
 
-taulell = Taulell(totalPlayers)
+taulellOriginal = Taulell(totalPlayers)
 
 
-# taulell.marcarCasella(0,1)
-# taulell.marcarCasella(2,1)
-# taulell.marcarCasella(1,1)
-# taulell.checkBoardBasedOnLastMove(1,1)
-# taulell.getPuntuacio()
-# print(taulell.getCasellesBuides())
-# print(taulell)
+miniMax(taulellOriginal)
 
-miniMax(taulell)
+print("Puntuacio final: S (jugador MIN) guanya "+ str(StotalWins)+" cops i O (jugador MAX) guanya "+str(OtotalWins)+" cops")
