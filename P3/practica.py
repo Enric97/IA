@@ -214,4 +214,5 @@ taulellOriginal = Taulell(totalPlayers)
 
 miniMax(taulellOriginal)
 
-print("Puntuacio final: S (jugador MIN) guanya "+ str(StotalWins)+" cops i O (jugador MAX) guanya "+str(OtotalWins)+" cops")
+print("Començant amb moviment del jugador O (MAX), obtenim que: ")
+print("\t S (jugador MIN) guanya "+ str(StotalWins)+" cops i\n\t O (jugador MAX) guanya "+str(OtotalWins)+" cops")
