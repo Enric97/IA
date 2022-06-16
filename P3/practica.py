@@ -1,6 +1,5 @@
-
-
 from asyncio.windows_events import INFINITE
+import copy
 
 
 class Jugador:
@@ -122,6 +121,10 @@ class Taulell:
         for player in self.players:
             print ("El jugador "+str(player)+" porta "+str(player.wins)+ " punts")
 
+    def getGuanyador(self):
+        if(self.players[0].wins > self.players[1].wins): return self.players[0]
+        return self.players[1]
+
     def __str__(self):
         return '\n'.join(map(str, self.board))
 
@@ -132,53 +135,75 @@ class Taulell:
 
 
 def miniMax (taulell):
+    global OtotalWins
+    global StotalWins
     print(taulell)
     taulell.getPuntuacioPartida()
     print("------------------------")
 
     if(len(taulell.getCasellesBuides())==0): #Si s'ha acabat el taulell
-        if(taulell.players[0].wins > taulell.players[1].wins): #Puntuem al jugador amb mes wins
-            taulell.players[0].winGame()
+        guanyador = taulell.getGuanyador()
+        if(guanyador.name == "O"):
+            OtotalWins +=1
         else:
-            taulell.players[1].winGame()
-        return taulell.getPuntuacioTotal()  #Printejem las puntuacions
+            StotalWins +=1
+        # return taulell.getPuntuacioTotal()  #Printejem las puntuacions
 
     casellesBuides = taulell.getCasellesBuides()
     placeholder = 0 #Valor placeholder de punts
-    nextCasella = None  #variable que ens indicara la proxima casella
+    nextCasella = {} #variable que ens indicara la proxima casella
 
     if (str(taulell.actualPlayer) == "O"): #Fem que O sigui max
         for casella in casellesBuides:      #Mirem totes les caselles buides
-            if(taulell.marcarCasella(casella[0],casella[1]) >= placeholder):    #Si esa casella ens dona mes punts que el que tenim en el placeholder
-                placeholder = taulell.marcarCasella(casella[0],casella[1])  #actualitzem camps
-                nextCasella = casella
+            puntuacio = taulell.marcarCasella(casella[0],casella[1]) #Mirem els punts que ens donaria esa casella
+            if( puntuacio >= placeholder):    #Si esa casella ens dona mes punts que el que tenim en el placeholder
+                placeholder = puntuacio  #actualitzem camps
+                nextCasella[tuple(casella)] = placeholder
+            
             taulell.buidarCasella(casella[0],casella[1])    #marquem com a buida sempre, perque sempre visitem (es la condicio del if)
 
-        taulell.marcarCasella(nextCasella[0],nextCasella[1])    #tornem a marcar sol la casella que ens interessa
-        taulell.actualPlayer.win(placeholder)   #Indiquem els punts que ha guanyat amb aquesta jugada
-        taulell.changePlayer()  #Cambiem de jugador
-        return miniMax(taulell)
+        highest = max(nextCasella.values())
+        allPossibleCasellas = [k for k, v in nextCasella.items() if v == highest]
+            # print( allPossibleCasellas)
+
+       
+        for crisella in allPossibleCasellas:
+            taulell2 = copy.deepcopy(taulell)
+            taulell2.marcarCasella(crisella[0],crisella[1])    #tornem a marcar sol la casella que ens interessa
+            taulell2.actualPlayer.win(placeholder)   #Indiquem els punts que ha guanyat amb aquesta jugada
+            taulell2.changePlayer()  #Cambiem de jugador
+            return miniMax(taulell2)
 
     else:   #Exactament el mateix, sol que la condicio es <= (busquem que doni els menors punts possibles)
         placeholder= int(INFINITE)    #Donat que busquem el minim, el placeholder el fiquem al maxim
         for casella in casellesBuides:
-            if(taulell.marcarCasella(casella[0],casella[1]) <= placeholder):
-                placeholder = taulell.marcarCasella(casella[0],casella[1])
-                nextCasella = casella
-            taulell.buidarCasella(casella[0],casella[1])
+            puntuacio = taulell.marcarCasella(casella[0],casella[1])
+            if(puntuacio <= placeholder):
+                placeholder = puntuacio  #actualitzem camps
+                nextCasella[tuple(casella)] = placeholder
+            
+            taulell.buidarCasella(casella[0],casella[1])    #marquem com a buida sempre, perque sempre visitem (es la condicio del if)
 
-        taulell.marcarCasella(nextCasella[0],nextCasella[1])
-        taulell.actualPlayer.win(placeholder)
-        taulell.changePlayer()
-        return miniMax(taulell)
-
-
-
+        highest = min(nextCasella.values())
+        allPossibleCasellas = [k for k, v in nextCasella.items() if v == highest]
+            # print( allPossibleCasellas)
 
 
+        for crisella in allPossibleCasellas:
+            taulell2 = copy.deepcopy(taulell)
+            taulell2.marcarCasella(crisella[0],crisella[1])    #tornem a marcar sol la casella que ens interessa
+            taulell2.actualPlayer.win(placeholder)   #Indiquem els punts que ha guanyat amb aquesta jugada
+            taulell2.changePlayer()  #Cambiem de jugador
+            return miniMax(taulell2)
 
 
 
+
+
+
+
+OtotalWins=0
+StotalWins=0
 player1 = Jugador("O")
 player2 = Jugador("S")
 totalPlayers = [player1, player2]
