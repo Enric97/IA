@@ -96,17 +96,36 @@ class Taulell:
 
         casellesPerVisitar.remove([fila, columna]) #Eliminem la casella desde la que partim
         # print(casellesPerVisitar)
-        return self.getQuantitatPunts(casellesPerVisitar)
+        return self.getQuantitatPunts(casellesPerVisitar, fila, columna)
 
-    def getQuantitatPunts(self, caselles):
+    def getQuantitatPunts(self, caselles, filaOrigen, columnaOrigen):
         jugador = self.actualPlayer
         punts = 0
-        for casella in caselles:    #Mirem totes les caselles
-            player = self.board[casella[0]][casella[1]].player  #Mirem quin jugador a marcat la casella, comparem strings perque objectes no va bé
-            if((player != "-") & (player is not jugador)):      #si el que ha marcat la casella es diferent a ell mateix i no es empty, li sumem un punt
-                # jugador.win()
-                punts +=1
-        # self.changePlayer()
+
+        if(self.actualPlayer.name=="O"):
+            for casella in caselles:    #Mirem totes les caselles
+                if((casella[0]==filaOrigen+1 & columnaOrigen==casella[1])
+                    | (casella[0]==filaOrigen & casella[1] == columnaOrigen+1)
+                    | (casella[0]==filaOrigen+1 & casella[1]==columnaOrigen+1)
+                    | (casella[0]==filaOrigen-1 & casella[1]== columnaOrigen+1)):
+
+                    player = self.board[casella[0]][casella[1]].player  
+                    if((player != "-") & (player is not jugador)):      
+                    # print((str(player)+jugador.name))
+                    # if((primeraLletra+jugador.name)=="OS"):
+                        punts +=1
+            # self.changePlayer()
+
+        else:
+            for casella in caselles:    #Mirem totes les caselles
+                if((casella[0]==filaOrigen-1 & columnaOrigen==casella[1])
+                    | (casella[0]==filaOrigen & casella[1] == columnaOrigen-1)
+                    | (casella[0]==filaOrigen-1 & casella[1]==columnaOrigen-1)
+                    | (casella[0]==filaOrigen+1 & casella[1]== columnaOrigen-1)):
+
+                    player = self.board[casella[0]][casella[1]].player  
+                    if((player != "-") & (player is not jugador)):      
+                        punts +=1
         return punts
 
     def changePlayer(self):
@@ -176,16 +195,16 @@ def miniMax (taulell):
             miniMax(taulell2)
 
     else:   #Exactament el mateix, sol que la condicio es <= (busquem que doni els menors punts possibles)
-        placeholder= int(INFINITE)    #Donat que busquem el minim, el placeholder el fiquem al maxim
+        placeholder= 0  #Donat que busquem el minim, el placeholder el fiquem al maxim
         for casella in casellesBuides:
             puntuacio = taulell.marcarCasella(casella[0],casella[1])
-            if(puntuacio <= placeholder):
+            if(puntuacio >= placeholder):
                 placeholder = puntuacio  #actualitzem camps
                 nextCasella[tuple(casella)] = placeholder
             
             taulell.buidarCasella(casella[0],casella[1])    #marquem com a buida sempre, perque sempre visitem (es la condicio del if)
 
-        highest = min(nextCasella.values())
+        highest = max(nextCasella.values())
         allPossibleCasellas = [k for k, v in nextCasella.items() if v == highest]
             # print( allPossibleCasellas)
 
@@ -211,10 +230,11 @@ taulellOriginal = Taulell(totalPlayers)
 
 miniMax(taulellOriginal)
 
-totalPlayersGame2 = [player2, player1]
-taulell2Game = Taulell(totalPlayersGame2)
+# totalPlayersGame2 = [player2, player1]
+# taulell2Game = Taulell(totalPlayersGame2)
 
-miniMax(taulell2Game)
+# miniMax(taulell2Game)
 
-print("Començant amb moviment del jugador O (MAX), obtenim que: ")
-print("\t S (jugador MIN) guanya "+ str(StotalWins/(OtotalWins+StotalWins)* 100)+" % cops i\n\t O (jugador MAX) guanya "+str(OtotalWins/(OtotalWins+StotalWins)* 100)+" % cops")
+print("Començant amb moviment del jugador O (MAX) i despres començant per el jugador S (MIN), obtenim que: ")
+print("\t O (jugador MAX) guanya "+ str(OtotalWins/(OtotalWins+StotalWins)* 100)+" % dels cops (" +str(OtotalWins)+")")
+print("\t S (jugador MIN) guanya "+ str(StotalWins/(OtotalWins+StotalWins)* 100)+" % dels cops (" +str(StotalWins)+")" )
