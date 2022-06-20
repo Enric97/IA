@@ -200,9 +200,6 @@ def miniMax (taulell):
 
 
 
-
-
-
 OtotalWins=0
 StotalWins=0
 player1 = Jugador("O")
@@ -214,5 +211,10 @@ taulellOriginal = Taulell(totalPlayers)
 
 miniMax(taulellOriginal)
 
+totalPlayersGame2 = [player2, player1]
+taulell2Game = Taulell(totalPlayersGame2)
+
+miniMax(taulell2Game)
+
 print("Començant amb moviment del jugador O (MAX), obtenim que: ")
-print("\t S (jugador MIN) guanya "+ str(StotalWins)+" cops i\n\t O (jugador MAX) guanya "+str(OtotalWins)+" cops")
+print("\t S (jugador MIN) guanya "+ str(StotalWins/(OtotalWins+StotalWins)* 100)+" % cops i\n\t O (jugador MAX) guanya "+str(OtotalWins/(OtotalWins+StotalWins)* 100)+" % cops")
