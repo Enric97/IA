@@ -103,25 +103,23 @@ class Taulell:
         punts = 0
 
         if(self.actualPlayer.name=="O"):
-            for casella in caselles:    #Mirem totes les caselles
-                if((casella[0]==filaOrigen+1 & columnaOrigen==casella[1])
-                    | (casella[0]==filaOrigen & casella[1] == columnaOrigen+1)
-                    | (casella[0]==filaOrigen+1 & casella[1]==columnaOrigen+1)
-                    | (casella[0]==filaOrigen-1 & casella[1]== columnaOrigen+1)):
+            for casella in caselles:    
+                if(((casella[0]==(filaOrigen+1)) & (columnaOrigen==casella[1]))
+                    | ((casella[0]==filaOrigen) & (casella[1] == (columnaOrigen+1)))
+                    | ((casella[0]==(filaOrigen+1)) & (casella[1]==(columnaOrigen+1)))
+                    | ((casella[0]==(filaOrigen-1)) & (casella[1]== (columnaOrigen+1)))):
 
                     player = self.board[casella[0]][casella[1]].player  
                     if((player != "-") & (player is not jugador)):      
-                    # print((str(player)+jugador.name))
-                    # if((primeraLletra+jugador.name)=="OS"):
                         punts +=1
-            # self.changePlayer()
+
 
         else:
             for casella in caselles:    #Mirem totes les caselles
-                if((casella[0]==filaOrigen-1 & columnaOrigen==casella[1])
-                    | (casella[0]==filaOrigen & casella[1] == columnaOrigen-1)
-                    | (casella[0]==filaOrigen-1 & casella[1]==columnaOrigen-1)
-                    | (casella[0]==filaOrigen+1 & casella[1]== columnaOrigen-1)):
+                if(((casella[0]==filaOrigen-1) & (columnaOrigen==casella[1]))
+                    |( (casella[0]==filaOrigen) & (casella[1] == columnaOrigen-1))
+                    | ((casella[0]==filaOrigen-1) & (casella[1]==columnaOrigen-1))
+                    | ((casella[0]==filaOrigen+1) & (casella[1]== columnaOrigen-1))):
 
                     player = self.board[casella[0]][casella[1]].player  
                     if((player != "-") & (player is not jugador)):      
@@ -234,7 +232,8 @@ miniMax(taulellOriginal)
 # taulell2Game = Taulell(totalPlayersGame2)
 
 # miniMax(taulell2Game)
-
-print("Començant amb moviment del jugador O (MAX) i despres començant per el jugador S (MIN), obtenim que: ")
+print("Tenim 2 jugadors MAX, tot i que indiquem com a MAX el jugador O (perque es el que comença)")
+print("Tot i així, indiquem al jugador S com a MIN (tot i buscar també max) ")
+print("Començant amb moviment del jugador O (MAX): ")
 print("\t O (jugador MAX) guanya "+ str(OtotalWins/(OtotalWins+StotalWins)* 100)+" % dels cops (" +str(OtotalWins)+")")
-print("\t S (jugador MIN) guanya "+ str(StotalWins/(OtotalWins+StotalWins)* 100)+" % dels cops (" +str(StotalWins)+")" )
+print("\t S (jugador 'MIN') guanya "+ str(StotalWins/(OtotalWins+StotalWins)* 100)+" % dels cops (" +str(StotalWins)+")" )
