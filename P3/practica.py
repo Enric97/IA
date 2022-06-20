@@ -97,17 +97,37 @@ class Taulell:
 
         casellesPerVisitar.remove([fila, columna]) #Eliminem la casella desde la que partim
         # print(casellesPerVisitar)
-        return self.getQuantitatPunts(casellesPerVisitar)
+        return self.getQuantitatPunts(casellesPerVisitar, fila, columna)
 
-    def getQuantitatPunts(self, caselles):
+    def getQuantitatPunts(self, caselles, filaOrigen, columnaOrigen):
         jugador = self.actualPlayer
         punts = 0
-        for casella in caselles:    #Mirem totes les caselles
-            player = self.board[casella[0]][casella[1]].player  #Mirem quin jugador a marcat la casella, comparem strings perque objectes no va bé
-            if((player != "-") & (player is not jugador)):      #si el que ha marcat la casella es diferent a ell mateix i no es empty, li sumem un punt
-                # jugador.win()
-                punts +=1
-        # self.changePlayer()
+
+        if(self.actualPlayer.name=="O"):
+            for casella in caselles:    
+                # print("Fila: ",casella[0])
+                # print("Columna: ",casella[1])
+                # print((casella[0]==filaOrigen) & (casella[1] == (columnaOrigen+1)))
+                if(((casella[0]==(filaOrigen+1)) & (columnaOrigen==casella[1]))
+                    | ((casella[0]==filaOrigen) & (casella[1] == (columnaOrigen+1)))
+                    | ((casella[0]==(filaOrigen+1)) & (casella[1]==(columnaOrigen+1)))
+                    | ((casella[0]==(filaOrigen-1)) & (casella[1]== (columnaOrigen+1)))):
+
+                    player = self.board[casella[0]][casella[1]].player  
+                    if((player != "-") & (player is not jugador)):      
+                        punts +=1
+
+
+        else:
+            for casella in caselles:    #Mirem totes les caselles
+                if(((casella[0]==filaOrigen-1) & (columnaOrigen==casella[1]))
+                    |( (casella[0]==filaOrigen) & (casella[1] == columnaOrigen-1))
+                    | ((casella[0]==filaOrigen-1) & (casella[1]==columnaOrigen-1))
+                    | ((casella[0]==filaOrigen+1) & (casella[1]== columnaOrigen-1))):
+
+                    player = self.board[casella[0]][casella[1]].player  
+                    if((player != "-") & (player is not jugador)):      
+                        punts +=1
         return punts
 
     def changePlayer(self):
@@ -160,9 +180,9 @@ def miniMax (taulell):
         return miniMax(taulell)
 
     else:   #Exactament el mateix, sol que la condicio es <= (busquem que doni els menors punts possibles)
-        placeholder= int(INFINITE)    #Donat que busquem el minim, el placeholder el fiquem al maxim
+        placeholder= 0    #Donat que busquem el minim, el placeholder el fiquem al maxim
         for casella in casellesBuides:
-            if(taulell.marcarCasella(casella[0],casella[1]) <= placeholder):
+            if(taulell.marcarCasella(casella[0],casella[1]) >= placeholder):
                 placeholder = taulell.marcarCasella(casella[0],casella[1])
                 nextCasella = casella
             taulell.buidarCasella(casella[0],casella[1])
