@@ -6,7 +6,7 @@
 - [Algoritme Greedy](https://github.com/Enric97/IA/blob/main/README.md#carpeta-greedy---algoritme-greedy)  
 - [Pràctica 1](https://github.com/Enric97/IA/blob/main/README.md#pr%C3%A0ctica-1) 
 - [Pràctica 2](https://github.com/Enric97/IA/blob/main/README.md#pr%C3%A0ctica-2) 
-- [Pràctica 3](https://github.com/Enric97/IA/blob/main/README.md#pr%C3%A0ctica-3) 
+- [Pràctica 3](https://github.com/Enric97/IA/blob/TotesLesPartides/README.md#pr%C3%A0ctica-3) 
 
 # Algoritme Greedy
 ## [Carpeta Greedy](Greedy) -> Algoritme Greedy
