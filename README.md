@@ -193,8 +193,7 @@ A continuació es mostra un exemple d'execució de l'algoritme:
 
 Tan bon punt es comença a executar, l'algoritme explora les possibilitats de moviments a l'arbre, i realitza una traça mostrant la quantitat de punts que porten els dos jugadors a cada pas i com es va omplint progressivament el tauler.
 
-![image](https://user-images.githubusercontent.com/60795194/175259976-529fbf33-7bcb-45b7-9312-e2d77f371d88.png)
-
+![image](https://user-images.githubusercontent.com/60795194/175781434-81fb50af-e026-4371-8aa8-b72cffd23b48.png)
 
 Finalment, es mostren les estadístiques de probabilitat de victòria per a cada jugador, amb el nombre de possibilitats explorades.
 
