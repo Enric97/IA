@@ -140,7 +140,8 @@ class Taulell:
 
     def getGuanyador(self):
         if(self.players[0].wins > self.players[1].wins): return self.players[0]
-        return self.players[1]
+        if(self.players[1].wins > self.players[0].wins): return self.players[1]
+        return Jugador("DrawGame")
 
     def __str__(self):
         return '\n'.join(map(str, self.board))
@@ -154,6 +155,7 @@ class Taulell:
 def miniMax (taulell):
     global OtotalWins
     global StotalWins
+    global draws
     print(taulell)
     taulell.getPuntuacioPartida()
     print("------------------------")
@@ -162,8 +164,10 @@ def miniMax (taulell):
         guanyador = taulell.getGuanyador()
         if(guanyador.name == "O"):
             OtotalWins +=1
-        else:
+        elif(guanyador.name == "S"):
             StotalWins +=1
+        else:
+            draws +=1
         # return taulell.getPuntuacioTotal()  #Printejem las puntuacions
         return
 
@@ -219,6 +223,7 @@ def miniMax (taulell):
 
 OtotalWins=0
 StotalWins=0
+draws = 0
 player1 = Jugador("O")
 player2 = Jugador("S")
 totalPlayers = [player1, player2]
@@ -234,6 +239,7 @@ miniMax(taulellOriginal)
 # miniMax(taulell2Game)
 print("Tenim 2 jugadors MAX, tot i que indiquem com a MAX el jugador O (perque es el que comença)")
 print("Tot i així, indiquem al jugador S com a MIN (tot i buscar també max) ")
-print("Començant amb moviment del jugador O (MAX): ")
-print("\t O (jugador MAX) guanya "+ str(round(OtotalWins/(OtotalWins+StotalWins)* 100,2))+" % dels cops (" +str(OtotalWins)+")")
-print("\t S (jugador 'MIN') guanya "+ str(round(StotalWins/(OtotalWins+StotalWins)* 100,2))+" % dels cops (" +str(StotalWins)+")" )
+print("Començant amb moviment del jugador O (MAX) arribem a jugar "+str(OtotalWins+StotalWins+draws)+" partides i trobemde les quals: ")
+print("\t O (jugador MAX) guanya "+ str(round(OtotalWins/(OtotalWins+StotalWins+draws)* 100,2))+" % dels cops (" +str(OtotalWins)+")")
+print("\t S (jugador 'MIN') guanya "+ str(round(StotalWins/(OtotalWins+StotalWins+draws)* 100,2))+" % dels cops (" +str(StotalWins)+")" )
+print("\t Finalment, hi ha un empat en "+ str(round(draws/(OtotalWins+StotalWins+draws)* 100,2))+" % dels cops (" +str(draws)+")" )
