@@ -6,7 +6,7 @@
 - [Algoritme Greedy](https://github.com/Enric97/IA/blob/main/README.md#carpeta-greedy---algoritme-greedy)  
 - [Pràctica 1](https://github.com/Enric97/IA/blob/main/README.md#pr%C3%A0ctica-1) 
 - [Pràctica 2](https://github.com/Enric97/IA/blob/main/README.md#pr%C3%A0ctica-2) 
-
+- [Pràctica 3](https://github.com/Enric97/IA/blob/TotesLesPartides/README.md#pr%C3%A0ctica-3) 
 
 # Algoritme Greedy
 ## [Carpeta Greedy](Greedy) -> Algoritme Greedy
@@ -159,4 +159,42 @@ Al executar el programa, també triga un cert temps però acaba retornant un cam
 I després el resultat especifica l'ordre en què es fan els moviments:
 
 ![image](https://user-images.githubusercontent.com/60795194/172239306-7b5ea980-db94-4fb0-8476-238cc218369f.png)
+
+
+
+# Pràctica 3
+## [Carpeta P3](P3) -> Minimax pel joc de l'Ós
+
+La carpeta inclou l'enunciat de la Pràctica 3 de l'assignatura i la seva implementació en Python. Utilitza l'algoritme Minimax.
+
+### practica.py
+#### Estructura del programa i exemple d'execució
+
+![image](https://user-images.githubusercontent.com/60795194/175258006-18dca3d2-8d90-4c49-a170-3af8326ae696.png)
+
+El programa està composat per tres classes (Jugador, Casella i Tauler, cadascuna amb els seus mètodes), un mètode principal que implementa el propi algoritme (miniMax) i la preparació i crida del mètode.
+
+S'explora el funcionament de l'algoritme implementat a continuació:
+
+![image](https://user-images.githubusercontent.com/60795194/175258677-d9620f41-001d-4615-820b-3770c2ce41f9.png)
+
+Primer s'explora el cas que s'hagi acabat la partida.
+Tot seguit, es realitzen els passos per al jugador "O", en el cas que sigui el seu torn, i es repeteix el mètode Minimax de manera recursiva.
+
+![image](https://user-images.githubusercontent.com/60795194/175258736-e2c78f92-e643-41ea-9425-865d18a122f4.png)
+
+Finalment, en el cas que sigui el torn del jugador "S", es realitzen els passos per al seu torn de joc.
+
+
+A continuació es mostra un exemple d'execució de l'algoritme:
+
+![image](https://user-images.githubusercontent.com/60795194/175260395-00c13f82-4fe7-4f6e-99fa-8bc22dc7cb51.png)
+
+
+Tan bon punt es comença a executar, l'algoritme explora les possibilitats de moviments a l'arbre, i realitza una traça mostrant la quantitat de punts que porten els dos jugadors a cada pas i com es va omplint progressivament el tauler.
+
+![image](https://user-images.githubusercontent.com/60795194/175259976-529fbf33-7bcb-45b7-9312-e2d77f371d88.png)
+
+
+Finalment, es mostren les estadístiques de probabilitat de victòria per a cada jugador, amb el nombre de possibilitats explorades.
 
